@@ -1,38 +1,43 @@
-- name: Install Redis Component
+- name: install redis component
   hosts: redis
-  become: true
+  become: yes
   tasks:
-    - name: Install Remi release repository
+    - name: install epel release repo
+      ansible.builtin.dnf:
+        name: epel-release
+        state: present
+
+    - name: install remi release repo
       ansible.builtin.dnf:
         name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
         state: present
         disable_gpg_check: true
 
-    - name: Enable Redis 6.2 Remi module
+    - name: enable redis remi module
       ansible.builtin.dnf:
         name: '@redis:remi-6.2'
         state: present
 
-    - name: Install Redis package
+    - name: install redis
       ansible.builtin.dnf:
         name: redis
         state: present
 
-    - name: Allow remote connections in Redis configuration
+    - name: allow remote connections
       ansible.builtin.replace:
         path: /etc/redis/redis.conf
         regexp: '^bind 127\.0\.0\.1'
         replace: 'bind 0.0.0.0'
-      notify: Restart Redis
+      notify: restart redis
 
-    - name: Ensure Redis service is running and enabled
+    - name: start and enable redis
       ansible.builtin.service:
         name: redis
         state: started
-        enabled: true
+        enabled: yes
 
   handlers:
-    - name: Restart Redis
+    - name: restart redis
       ansible.builtin.service:
         name: redis
         state: restarted
