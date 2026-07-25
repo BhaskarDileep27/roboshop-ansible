@@ -29,9 +29,9 @@
       remote_src: yes
   
   - name: Create nginx config directory
-      ansible.builtin.file:
-        path: /etc/nginx/default.d
-        state: directory
+    ansible.builtin.file:
+      path: /etc/nginx/default.d
+      state: directory
 
 
   - name: copy roboshop configuration
