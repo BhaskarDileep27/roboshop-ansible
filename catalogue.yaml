@@ -13,6 +13,7 @@
   - name: create roboshop user
     ansible.builtin.user:
       name: roboshop
+      state: present
 
   - name: Recursively remove app directory
     ansible.builtin.file:
@@ -45,7 +46,7 @@
       src: catalogue.service
       dest: /etc/systemd/system/catalogue.service
 
-  - name: deamon realod and start
+  - name: daemon reload and start
     ansible.builtin.systemd_service:
       daemon_reload: true
 
