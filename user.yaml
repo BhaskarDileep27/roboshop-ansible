@@ -58,11 +58,11 @@
 
   - name: Install mongodb client
     ansible.builtin.package:
-      name: mongodb-org-shell
+      name: mongodb-mongosh
       state: present
 
   - name: get the users count
-    ansible.builtin.command:  mongosh --host mongodb.dileep.sbs--quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
+    ansible.builtin.command:  mongosh --host mongodb.dileep.sbs --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
     register: user_count
 
   # - name: print the count
